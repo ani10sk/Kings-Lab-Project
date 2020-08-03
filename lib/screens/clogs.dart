@@ -28,7 +28,12 @@ class _CLogsState extends State<CLogs> {
     setState(() {
       iswaiting=true;
     });
-    List<CallLogEntry> entries=(await CallLog.get()).toList();
+    int from=DateTime.now().subtract(Duration(days:15)).millisecondsSinceEpoch;
+    int to=DateTime.now().millisecondsSinceEpoch;
+    List<CallLogEntry> entries=(await CallLog.query(
+      dateFrom: from,
+      dateTo: to
+    )).toList();
     logs=entries;
     setState(() {
       iswaiting=false;
