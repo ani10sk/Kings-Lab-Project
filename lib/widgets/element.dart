@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/clogs.dart';
 
 class Ele extends StatelessWidget{
   final double wd;
@@ -8,6 +9,11 @@ class Ele extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return InkWell(
+      onTap:(){
+        if(cont=='Call Log'){
+          Navigator.of(context).pushNamed(CLogs.rout);
+        }
+      },
       child:Container(
         width:wd*0.5,
         height:wd*0.3,
