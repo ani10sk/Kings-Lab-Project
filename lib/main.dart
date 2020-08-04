@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home:Menu()/*Consumer<Auth>(
+        home:Consumer<Auth>(
           builder:(ctx,auth,_)=>auth.auth==null?
           Login():auth.auth=='success'?Menu():Login(),
-        )*/,
+        ),
         routes:{
           Menu.rout:(ctx)=>Menu(),
           CLogs.rout:(ctx)=>CLogs(),
