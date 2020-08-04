@@ -4,6 +4,7 @@ import './screens/login.dart';
 import './screens/menu.dart';
 import './providers/auth.dart';
 import './screens/clogs.dart';
+import './screens/quicklead.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,13 +22,14 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home:Consumer<Auth>(
+        home:Menu()/*Consumer<Auth>(
           builder:(ctx,auth,_)=>auth.auth==null?
           Login():auth.auth=='success'?Menu():Login(),
-        ),
+        )*/,
         routes:{
           Menu.rout:(ctx)=>Menu(),
-          CLogs.rout:(ctx)=>CLogs()
+          CLogs.rout:(ctx)=>CLogs(),
+          QuickLead.rout:(ctx)=>QuickLead()
         },
       ),
     );

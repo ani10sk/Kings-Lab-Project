@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/clogs.dart';
+import '../screens/quicklead.dart';
 
 class Ele extends StatelessWidget{
   final double wd;
@@ -12,6 +13,8 @@ class Ele extends StatelessWidget{
       onTap:(){
         if(cont=='Call Log'){
           Navigator.of(context).pushNamed(CLogs.rout);
+        }else if(cont=='Quick Lead'){
+          Navigator.of(context).pushNamed(QuickLead.rout);
         }
       },
       child:Container(
