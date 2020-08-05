@@ -26,13 +26,13 @@ class _LoginState extends State<Login> {
       body:isWaiting?Center(child:CircularProgressIndicator()):ListView(
         children:[
           SizedBox(
-            height:ht*0.1
+            height:ht*0.15
           ),
           Container(
             child:Image.asset('assets/logo1.jpg')
           ),
           SizedBox(
-            height:ht*0.1
+            height:ht*0.009
           ),
           Detail(wd: wd, ht: ht,cont:'Email',type:TextInputType.emailAddress,ans:email,),
           Detail(wd: wd, ht: ht,cont:'Password',type:TextInputType.visiblePassword,ans:psw,),
@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
             },
             child: Container(
               alignment:Alignment.centerRight,
-              margin:EdgeInsets.fromLTRB(wd*0.08,wd*0.06,wd*0.08,0),
+              margin:EdgeInsets.fromLTRB(wd*0.08,wd*0.02,wd*0.08,0),
               padding:EdgeInsets.all(wd*0.01),
               width:wd*0.9,
               height:ht*0.07,
