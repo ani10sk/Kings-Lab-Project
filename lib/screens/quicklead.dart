@@ -44,7 +44,7 @@ class _QuickLeadState extends State<QuickLead> {
                 TableRow(
                   children:[
                     Box(20,10,10,10,'Phone Number',Colors.red,0),
-                    Box(10,10,20,10,'Location',Colors.black,0)
+                    Box(10,10,20,10,'Exp Closure Date',Colors.black,0)
                   ]
                 ),
                 TableRow(
@@ -57,13 +57,14 @@ class _QuickLeadState extends State<QuickLead> {
             ),
             AnimatedContainer(
               //color:Colors.red,
-              height:expAssignedUser==0?40:140,
+              height:expAssignedUser==0?40:150,
               margin:EdgeInsets.fromLTRB(20,20,20,20),
               duration:Duration(seconds:1),
               child:SizedBox(
-                height:expAssignedUser==0?40:140,
+                height:expAssignedUser==0?40:150,
                 width:wd-40,
                 child:ListView(
+                  physics:NeverScrollableScrollPhysics(),
                   children:[
                     Row(
                     mainAxisAlignment:MainAxisAlignment.center,
@@ -126,13 +127,14 @@ class _QuickLeadState extends State<QuickLead> {
             ),
             AnimatedContainer(
               //color:Colors.red,
-              height:expCategory==0?40:140,
+              height:expCategory==0?40:150,
               margin:EdgeInsets.fromLTRB(20,20,20,20),
               duration:Duration(seconds:1),
               child:SizedBox(
-                height:expCategory==0?40:140,
+                height:expCategory==0?40:150,
                 width:wd-40,
                 child:ListView(
+                  physics:NeverScrollableScrollPhysics(),
                   children:[
                     Row(
                     mainAxisAlignment:MainAxisAlignment.center,
@@ -195,13 +197,14 @@ class _QuickLeadState extends State<QuickLead> {
             ),
             AnimatedContainer(
               //color:Colors.red,
-              height:expGroup==0?40:140,
+              height:expGroup==0?40:150,
               margin:EdgeInsets.fromLTRB(20,20,20,20),
               duration:Duration(seconds:1),
               child:SizedBox(
-                height:expGroup==0?40:140,
+                height:expGroup==0?40:150,
                 width:wd-40,
                 child:ListView(
+                  physics:NeverScrollableScrollPhysics(),
                   children:[
                     Row(
                     mainAxisAlignment:MainAxisAlignment.center,

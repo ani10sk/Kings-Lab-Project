@@ -5,6 +5,7 @@ import './screens/menu.dart';
 import './providers/auth.dart';
 import './screens/clogs.dart';
 import './screens/quicklead.dart';
+import './screens/detaillead.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         routes:{
           Menu.rout:(ctx)=>Menu(),
           CLogs.rout:(ctx)=>CLogs(),
-          QuickLead.rout:(ctx)=>QuickLead()
+          QuickLead.rout:(ctx)=>QuickLead(),
+          DetailLead.rout:(ctx)=>DetailLead(),
         },
       ),
     );
