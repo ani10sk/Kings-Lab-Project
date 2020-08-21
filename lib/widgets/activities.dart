@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Activity extends StatelessWidget {
-  Map<int,dynamic> data={
+  final Map<int,dynamic> data={
     1:[Icons.call,Colors.red,Colors.red[200]],
     2:[Icons.mail,Colors.blue,Colors.blue[200]],
     3:[Icons.supervised_user_circle,Colors.green,Colors.green[200]],

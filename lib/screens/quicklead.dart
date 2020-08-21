@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:audio_recorder/audio_recorder.dart';
+import 'package:audioplayers/audioplayers.dart';
+import '../widgets/ddown.dart';
 
 class QuickLead extends StatefulWidget{
   static const rout='quicklead';
@@ -10,9 +14,98 @@ class _QuickLeadState extends State<QuickLead> {
   String assignedUser='SELF';
   String category='SELECT';
   String group='SELECT';
+  String status='SELECT';
   int expAssignedUser=0;
   int expCategory=0;
   int expGroup=0;
+  int expStatus=0;
+  @override
+  void initState(){
+    getper();
+    super.initState();
+  }
+
+  void changeuser(String user){
+    setState(() {
+      assignedUser=user;
+      expAssignedUser=0;
+    });
+  }
+
+  void expuser(){
+    setState(() {
+      expAssignedUser==0?expAssignedUser=1:expAssignedUser=0;
+    });
+  }
+
+  void changegroup(String groups){
+    setState(() {
+      group=groups;
+      expGroup=0;
+    });
+  }
+
+  void expagroup(){
+    setState(() {
+      expGroup==0?expGroup=1:expGroup=0;
+    });
+  }
+
+  void changeCat(String cat){
+    setState(() {
+      category=cat;
+      expCategory=0;
+    });
+  }
+
+  void expCat(){
+    setState(() {
+      expCategory==0?expCategory=1:expCategory=0;
+    });
+  }
+
+  void expStatu(){
+    setState(() {
+      expStatus==0?expStatus=1:expStatus=0;
+    });
+  }
+
+  void changeStat(String stat){
+    setState(() {
+      status=stat;
+      expStatus=0;
+    });
+  }
+
+  var isrecording=false;
+
+  AudioPlayer audioPlayer=AudioPlayer();
+  Recording rec;
+
+  Future<void> getper()async{
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.microphone,
+      Permission.speech,
+      Permission.storage,
+    ].request();
+  }
+
+  Future<void>startrecord()async{
+    bool haspermission=await AudioRecorder.hasPermissions;
+    print(haspermission);
+    await AudioRecorder.start();
+  }
+
+  play()async{
+    int res=await audioPlayer.play(rec.path,isLocal:true);
+    print(res);
+  }
+
+  Future<void> stoprecord()async{
+    print('hello');
+    rec=await AudioRecorder.stop();
+    print('Path:${rec.path} ,format:${rec.audioOutputFormat} ,durayion:${rec.duration} ,extension:${rec.extension}');
+  }
 
   @override
   Widget build(BuildContext context){
@@ -38,232 +131,40 @@ class _QuickLeadState extends State<QuickLead> {
               width:wd,margin:EdgeInsets.all(20),
               alignment:Alignment.centerRight,
               child:Icon(Icons.location_off,color:Colors.red,),)),
-            Box(20,20,20,10,'',Colors.red,1),
+            Box(20,20,20,10,'','Search',Colors.red,Icons.search),
             Table(
               children:[
                 TableRow(
                   children:[
-                    Box(20,10,10,10,'Phone Number',Colors.red,0),
-                    Box(10,10,20,10,'Exp Closure Date',Colors.black,0)
+                    Box(20,10,10,10,'Phone Number','Mobile Number',Colors.red,Icons.phone),
+                    Box(10,10,20,10,'Contact Name','Contact Name',Colors.black,Icons.add_call)
                   ]
                 ),
                 TableRow(
                   children:[
-                    Box(20,10,10,10,'Follow up Date',Colors.red,0),
-                    Box(10,10,20,10,'09:00 AM',Colors.red,0)
+                    Box(20,10,10,10,'13-7-2020','Followup date',Colors.red,Icons.calendar_today),
+                    Box(10,10,20,10,'09:00 AM','Followup Time',Colors.red,Icons.access_time)
+                  ]
+                ),
+                TableRow(
+                  children:[
+                    Box(20,10,10,10,'13-7-2020','Closure date',Colors.red,Icons.calendar_today),
+                    Box(10,10,20,10,'09:00 AM','Closure Time',Colors.red,Icons.access_time)
+                  ]
+                ),
+                TableRow(
+                  children:[
+                    Selected('Assigned User', wd,['Sample 1','Sample 2'],assignedUser,expAssignedUser,changeuser,expuser),
+                    Selected('Group', wd,['Sample 1','Sample 2'],group,expGroup,changegroup,expagroup),
+                  ]
+                ),
+                TableRow(
+                  children:[
+                    Selected('Category', wd,['Sample 1','Sample 2'],category,expCategory,changeCat,expCat),
+                    Selected('Status', wd,['Sample 1','Sample 2'],status,expStatus,changeStat,expStatu),
                   ]
                 )
               ]
-            ),
-            AnimatedContainer(
-              //color:Colors.red,
-              height:expAssignedUser==0?40:150,
-              margin:EdgeInsets.fromLTRB(20,20,20,20),
-              duration:Duration(seconds:1),
-              child:SizedBox(
-                height:expAssignedUser==0?40:150,
-                width:wd-40,
-                child:ListView(
-                  physics:NeverScrollableScrollPhysics(),
-                  children:[
-                    Row(
-                    mainAxisAlignment:MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('   Assigned User:  ',style:TextStyle(fontSize:17),),
-                      Text(assignedUser,style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)),
-                      Expanded(child:SizedBox()),
-                      IconButton(
-                        icon:Icon(expAssignedUser==0?Icons.keyboard_arrow_down:Icons.keyboard_arrow_up), 
-                        onPressed:(){
-                          setState(() {
-                            if(expAssignedUser==0){
-                              expAssignedUser=1;
-                            }else{
-                              expAssignedUser=0;
-                            }
-                          });
-                        }
-                        )
-                    ],
-                  ),
-                  expAssignedUser==1?
-                  Container(
-                    decoration:BoxDecoration(
-                      border:Border.all(
-                        color:Colors.black
-                      )
-                    ),
-                    alignment:Alignment.center,
-                    width:wd-40,
-                    child:FlatButton(
-                      onPressed:(){
-                        setState(() {
-                          assignedUser='SELF';
-                          expAssignedUser=0;
-                        });
-                      }, 
-                      child:Text('SELF',style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)))
-                  ):SizedBox(),
-                  expAssignedUser==1?
-                  Container(
-                    decoration:BoxDecoration(
-                      border:Border.all(
-                        color:Colors.black
-                      )
-                    ),
-                    width:wd-40,
-                    child:FlatButton(
-                      onPressed:(){
-                        setState(() {
-                          assignedUser='SAMPLE';
-                          expAssignedUser=0;
-                        });
-                      }, 
-                      child:Text('SAMPLE',style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)))
-                  ):SizedBox(),
-                  ] 
-                ),
-              )
-            ),
-            AnimatedContainer(
-              //color:Colors.red,
-              height:expCategory==0?40:150,
-              margin:EdgeInsets.fromLTRB(20,20,20,20),
-              duration:Duration(seconds:1),
-              child:SizedBox(
-                height:expCategory==0?40:150,
-                width:wd-40,
-                child:ListView(
-                  physics:NeverScrollableScrollPhysics(),
-                  children:[
-                    Row(
-                    mainAxisAlignment:MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('            Category:  ',style:TextStyle(fontSize:17),),
-                      Text(category,style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)),
-                      Expanded(child:SizedBox()),
-                      IconButton(
-                        icon:Icon(expCategory==0?Icons.keyboard_arrow_down:Icons.keyboard_arrow_up), 
-                        onPressed:(){
-                          setState(() {
-                            if(expCategory==0){
-                              expCategory=1;
-                            }else{
-                              expCategory=0;
-                            }
-                          });
-                        }
-                        )
-                    ],
-                  ),
-                  expCategory==1?
-                  Container(
-                    decoration:BoxDecoration(
-                      border:Border.all(
-                        color:Colors.black
-                      )
-                    ),
-                    alignment:Alignment.center,
-                    width:wd-40,
-                    child:FlatButton(
-                      onPressed:(){
-                        setState(() {
-                          category='SAMPLE 1';
-                          expCategory=0;
-                        });
-                      }, 
-                      child:Text('SAMPLE 1',style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)))
-                  ):SizedBox(),
-                  expCategory==1?
-                  Container(
-                    decoration:BoxDecoration(
-                      border:Border.all(
-                        color:Colors.black
-                      )
-                    ),
-                    width:wd-40,
-                    child:FlatButton(
-                      onPressed:(){
-                        setState(() {
-                          category='SAMPLE 2';
-                          expCategory=0;
-                        });
-                      }, 
-                      child:Text('SAMPLE 2',style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)))
-                  ):SizedBox(),
-                  ] 
-                ),
-              )
-            ),
-            AnimatedContainer(
-              //color:Colors.red,
-              height:expGroup==0?40:150,
-              margin:EdgeInsets.fromLTRB(20,20,20,20),
-              duration:Duration(seconds:1),
-              child:SizedBox(
-                height:expGroup==0?40:150,
-                width:wd-40,
-                child:ListView(
-                  physics:NeverScrollableScrollPhysics(),
-                  children:[
-                    Row(
-                    mainAxisAlignment:MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('                 Group:  ',style:TextStyle(fontSize:17),),
-                      Text(group,style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)),
-                      Expanded(child:SizedBox()),
-                      IconButton(
-                        icon:Icon(expGroup==0?Icons.keyboard_arrow_down:Icons.keyboard_arrow_up), 
-                        onPressed:(){
-                          setState(() {
-                            if(expGroup==0){
-                              expGroup=1;
-                            }else{
-                              expGroup=0;
-                            }
-                          });
-                        }
-                        )
-                    ],
-                  ),
-                  expGroup==1?
-                  Container(
-                    decoration:BoxDecoration(
-                      border:Border.all(
-                        color:Colors.black
-                      )
-                    ),
-                    alignment:Alignment.center,
-                    width:wd-40,
-                    child:FlatButton(
-                      onPressed:(){
-                        setState(() {
-                          group='SAMPLE 1';
-                          expGroup=0;
-                        });
-                      }, 
-                      child:Text('SAMPLE 1',style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)))
-                  ):SizedBox(),
-                  expGroup==1?
-                  Container(
-                    decoration:BoxDecoration(
-                      border:Border.all(
-                        color:Colors.black
-                      )
-                    ),
-                    width:wd-40,
-                    child:FlatButton(
-                      onPressed:(){
-                        setState(() {
-                          group='SAMPLE 2';
-                          expGroup=0;
-                        });
-                      }, 
-                      child:Text('SAMPLE 2',style:TextStyle(fontWeight:FontWeight.bold,fontSize:17)))
-                  ):SizedBox(),
-                  ] 
-                ),
-              )
             ),
             Container(
               width:wd-40,
@@ -277,7 +178,24 @@ class _QuickLeadState extends State<QuickLead> {
                 maxLines:2,
                 decoration:InputDecoration(
                   hintText:'Comment',
-                  contentPadding:EdgeInsets.fromLTRB(10,0,0,0)
+                  contentPadding:EdgeInsets.fromLTRB(10,0,0,0),
+                  suffixIcon:IconButton(
+                    icon:Icon(isrecording?Icons.mic:Icons.mic_none,color:Colors.blue), 
+                    onPressed:(){
+                      if(isrecording){
+                        stoprecord();
+                        setState(() {
+                          isrecording=false;
+                        });
+                      }else{
+                        startrecord();
+                        setState(() {
+                          isrecording=true;
+                        });
+                      }
+                    }
+                  ),
+                  prefixIcon:IconButton(icon:Icon(Icons.play_arrow), onPressed:play)
                 ),
                 textInputAction:TextInputAction.done,
               )
@@ -296,7 +214,8 @@ class Box extends StatelessWidget {
   final double b;
   final String hint;
   final Color bcolor;
-  final int isicon;
+  final String label;
+  final IconData d;
 
   Box(
     this.l,
@@ -304,26 +223,26 @@ class Box extends StatelessWidget {
     this.r,
     this.b,
     this.hint,
+    this.label,
     this.bcolor,
-    this.isicon
+    this.d
   );
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin:EdgeInsets.fromLTRB(l,t,r,b),
-      decoration:BoxDecoration(
-        border:Border.all(
-          color:bcolor
-        )
-      ),
+      /*decoration:BoxDecoration(
+      ),*/
       child:TextField(
         style:TextStyle(fontSize:20),
         decoration:InputDecoration(
+          labelText:label,
           hintText:hint,
-          hintStyle:TextStyle(fontSize:15),
-          contentPadding:EdgeInsets.all(10),
-          suffixIcon:isicon==1?Icon(Icons.search,color:Colors.black,):null
+          labelStyle:TextStyle(fontSize:12),
+          hintStyle:TextStyle(fontSize:12),
+          contentPadding:EdgeInsets.all(3),
+          suffixIcon:Icon(d,color:Colors.blue,)
         ),
       )
     );

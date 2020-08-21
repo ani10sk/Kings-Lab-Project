@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/element.dart';
+import '../widgets/drawer.dart';
 
 class Menu extends StatefulWidget{
   static const rout='menu';
@@ -52,24 +53,7 @@ class _MenuState extends State<Menu> {
           )
         ],
       ),
-      drawer:Drawer(
-        child: ListView(
-          children: <Widget>[
-            AppBar(
-              backgroundColor:Colors.black87,
-              title:Text('Options'),
-            ),
-            ListTile(
-              title:Text('Sample1')
-            ),
-            Divider(),
-            ListTile(
-              title:Text('Sample2')
-            ),
-            Divider()
-          ],
-        ),
-      ),
+      drawer:AppDrawer(),
       body:SingleChildScrollView(
         child:Column(
           children:[

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Priority extends StatelessWidget {
-  Map<int,dynamic> data={
+  final Map<int,dynamic> data={
     1:['Hot',Colors.red,Colors.red[200]],
     2:['Warm',Colors.blue,Colors.blue[200]],
     3:['Cold',Colors.green,Colors.green[200]],

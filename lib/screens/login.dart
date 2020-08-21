@@ -18,7 +18,7 @@ class _LoginState extends State<Login> {
     final ht=MediaQuery.of(context).size.height;
     final wd=MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor:Colors.grey[300],
+      backgroundColor:Colors.white,
       appBar:AppBar(
         title:Text('Sales Logics'),
         backgroundColor:Colors.black87,
@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
             height:ht*0.15
           ),
           Container(
-            child:Image.asset('assets/logo1.jpg')
+            child:Image.asset('assets/logo1.png')
           ),
           SizedBox(
             height:ht*0.009
@@ -110,7 +110,7 @@ class Detail extends StatelessWidget {
       width:wd*0.9,
       height:ht*0.07,
       decoration:BoxDecoration(
-        color:Colors.white,
+        color:Colors.grey[100],
         border:Border.all()
       ),
       child:TextField(

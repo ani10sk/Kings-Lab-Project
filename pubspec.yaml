@@ -28,6 +28,9 @@ dependencies:
   call_log: ^2.1.0
   permission_handler: ^5.0.1+1
   intl: ^0.16.1
+  shared_preferences: ^0.5.8
+  audio_recorder: ^1.0.2
+  audioplayers: ^0.15.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -52,7 +55,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/bell.png
-    - assets/logo1.jpg
+    - assets/logo1.png
     - assets/bolt.png
     - assets/call.png
     - assets/clock.png
