@@ -3,6 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:audio_recorder/audio_recorder.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../widgets/ddown.dart';
+import '../widgets/date.dart';
 
 class QuickLead extends StatefulWidget{
   static const rout='quicklead';
@@ -11,30 +12,40 @@ class QuickLead extends StatefulWidget{
 }
 
 class _QuickLeadState extends State<QuickLead> {
+  //Variables
   String assignedUser='SELF';
   String category='SELECT';
   String group='SELECT';
   String status='SELECT';
+  String budget='SELECTED';
+  String payment='SELECTED';
+  String branch='SELECTED';
+  String region='SELECTED';
+  int expbranch=0;
+  int expregion=0;
+  int expquicklead=0;
+  int exppayment=0;
+  int expbudget=0;
   int expAssignedUser=0;
   int expCategory=0;
   int expGroup=0;
   int expStatus=0;
+  int typeofuser=0;
+  void changeusercir(val){
+    setState(() {
+      typeofuser=val;
+    });
+  }
   @override
   void initState(){
     getper();
     super.initState();
   }
-
+  //Functions
   void changeuser(String user){
     setState(() {
       assignedUser=user;
       expAssignedUser=0;
-    });
-  }
-
-  void expuser(){
-    setState(() {
-      expAssignedUser==0?expAssignedUser=1:expAssignedUser=0;
     });
   }
 
@@ -48,6 +59,12 @@ class _QuickLeadState extends State<QuickLead> {
   void expagroup(){
     setState(() {
       expGroup==0?expGroup=1:expGroup=0;
+    });
+  }
+
+  void expuser(){
+    setState(() {
+      expAssignedUser==0?expAssignedUser=1:expAssignedUser=0;
     });
   }
 
@@ -76,6 +93,59 @@ class _QuickLeadState extends State<QuickLead> {
       expStatus=0;
     });
   }
+
+  void changeBudg(String stat){
+    setState(() {
+      budget=stat;
+      expbudget=0;
+    });
+  }
+
+  void expbudg(){
+    setState(() {
+      expbudget==0?expbudget=1:expbudget=0;
+    });
+  }
+
+  void changePayment(String stat){
+    setState(() {
+      payment=stat;
+      exppayment=0;
+    });
+  }
+
+  void exppay(){
+    setState(() {
+      exppayment==0?exppayment=1:exppayment=0;
+    });
+  }
+
+  void changebranch(String stat){
+    setState(() {
+      branch=stat;
+      expbranch=0;
+    });
+  }
+
+  void expbr(){
+    setState(() {
+      expbranch==0?expbranch=1:expbranch=0;
+    });
+  }
+
+  void changereg(String stat){
+    setState(() {
+      region=stat;
+      expregion=0;
+    });
+  }
+
+  void expr(){
+    setState(() {
+      expregion==0?expregion=1:expregion=0;
+    });
+  }
+
 
   var isrecording=false;
 
@@ -131,41 +201,69 @@ class _QuickLeadState extends State<QuickLead> {
               width:wd,margin:EdgeInsets.all(20),
               alignment:Alignment.centerRight,
               child:Icon(Icons.location_off,color:Colors.red,),)),
-            Box(20,20,20,10,'','Search',Colors.red,Icons.search),
+            Box(20,20,20,10,'','Search Existing Client',Colors.red,Icons.search,Colors.black),
             Table(
               children:[
                 TableRow(
                   children:[
-                    Box(20,10,10,10,'Phone Number','Mobile Number',Colors.red,Icons.phone),
-                    Box(10,10,20,10,'Contact Name','Contact Name',Colors.black,Icons.add_call)
+                    Box(20,10,10,10,'Phone Number','Mobile Number',Colors.red,Icons.phone,Colors.red),
+                    Box(10,10,20,10,'Contact Name','Contact Name',Colors.black,Icons.add_call,Colors.red),
                   ]
                 ),
                 TableRow(
                   children:[
-                    Box(20,10,10,10,'13-7-2020','Followup date',Colors.red,Icons.calendar_today),
-                    Box(10,10,20,10,'09:00 AM','Followup Time',Colors.red,Icons.access_time)
+                    DatePick('Followup Date'),
+                    DatePick('Closure Date'),
                   ]
                 ),
+              ],
+            ),
+            Table(
+              children:[
                 TableRow(
                   children:[
-                    Box(20,10,10,10,'13-7-2020','Closure date',Colors.red,Icons.calendar_today),
-                    Box(10,10,20,10,'09:00 AM','Closure Time',Colors.red,Icons.access_time)
+                    AddNewData(0,'Hot',null,Colors.orange,changeusercir,(wd-40)/2,typeofuser),
+                    AddNewData(1,'Warm',null,Colors.black,changeusercir,(wd-40)/2,typeofuser),
+                    AddNewData(2,'Cold',null,Colors.black,changeusercir,(wd-40)/2,typeofuser),
                   ]
                 ),
-                TableRow(
-                  children:[
-                    Selected('Assigned User', wd,['Sample 1','Sample 2'],assignedUser,expAssignedUser,changeuser,expuser),
-                    Selected('Group', wd,['Sample 1','Sample 2'],group,expGroup,changegroup,expagroup),
-                  ]
-                ),
-                TableRow(
-                  children:[
-                    Selected('Category', wd,['Sample 1','Sample 2'],category,expCategory,changeCat,expCat),
-                    Selected('Status', wd,['Sample 1','Sample 2'],status,expStatus,changeStat,expStatu),
-                  ]
-                )
               ]
             ),
+            Table(
+              children:[
+               TableRow(
+                  children:[
+                    Selected('Category', wd,['Sample 1','Sample 2'],category,expCategory,changeCat,expCat),
+                    Selected('Group', wd,['Sample 1','Sample 2'],group,expGroup,changegroup,expagroup),
+                  ]
+                ), 
+              ]
+            ),
+            Box(20,20,20,10,'','Product Search',Colors.red,Icons.search,Colors.red),
+            Table(
+              children:[
+               TableRow(
+                  children:[
+                    Selected('Budget', wd,['Sample 1','Sample 2'],budget,expbudget,changeBudg,expbudg),
+                    Selected('Payment', wd,['Sample 1','Sample 2'],payment,exppayment,changePayment,exppay),
+                  ]
+                ), 
+              ]
+            ),
+            expquicklead==0?
+            FlatButton(
+              onPressed:(){
+                setState(() {
+                  expquicklead=1;
+                });
+              }, 
+              child:Text(
+                'Add More Details',style:TextStyle(
+                  fontWeight:FontWeight.bold,decoration:TextDecoration.underline
+                )
+              )
+            ):SizedBox(),
+            expquicklead==1?
             Container(
               width:wd-40,
               margin:EdgeInsets.fromLTRB(20,10,20,10),
@@ -199,7 +297,37 @@ class _QuickLeadState extends State<QuickLead> {
                 ),
                 textInputAction:TextInputAction.done,
               )
-            )
+            ):SizedBox(),
+            expquicklead==0?SizedBox():
+            Table(
+              children:[
+                TableRow(
+                  children:[
+                    Selected('Assigned User', wd,['Sample 1','Sample 2'],assignedUser,expAssignedUser,changeuser,expuser),
+                    Box(20,10,10,10,'Enter email id','Email id',Colors.red,Icons.mail,Colors.black),
+                  ]
+                ),
+                TableRow(
+                  children:[
+                    Selected('Branch', wd,['Sample 1','Sample 2'],branch,expbranch,changebranch,expbr),
+                    Selected('Region', wd,['Sample 1','Sample 2'],region,expregion,changereg,expr),
+                  ]
+                ),
+              ],
+            ),
+            expquicklead==1?
+            FlatButton(
+              onPressed:(){
+                setState(() {
+                  expquicklead=0;
+                });
+              }, 
+              child:Text(
+                'Show Less',style:TextStyle(
+                  fontWeight:FontWeight.bold,decoration:TextDecoration.underline
+                )
+              )
+            ):SizedBox(),
           ]
         )
       ),
@@ -216,6 +344,7 @@ class Box extends StatelessWidget {
   final Color bcolor;
   final String label;
   final IconData d;
+  final Color underline;
 
   Box(
     this.l,
@@ -225,7 +354,8 @@ class Box extends StatelessWidget {
     this.hint,
     this.label,
     this.bcolor,
-    this.d
+    this.d,
+    this.underline
   );
 
   @override
@@ -237,6 +367,9 @@ class Box extends StatelessWidget {
       child:TextField(
         style:TextStyle(fontSize:20),
         decoration:InputDecoration(
+          enabledBorder: UnderlineInputBorder(      
+            borderSide: BorderSide(color:underline),   
+          ),  
           labelText:label,
           hintText:hint,
           labelStyle:TextStyle(fontSize:12),
@@ -249,7 +382,7 @@ class Box extends StatelessWidget {
   }
 }
 
-class Cont extends StatelessWidget {
+class Cont extends StatelessWidget{
 
   final double wd;
   final String cont;
@@ -277,6 +410,52 @@ class Cont extends StatelessWidget {
         cont,style:TextStyle(
           color:col,fontSize:size,fontWeight:wt,fontStyle:stl
         )
+      ),
+    );
+  }
+}
+
+class AddNewData extends StatelessWidget{
+  final int value;
+  final String cont;
+  final IconData icon;
+  final Color color;
+  final Function funct;
+  final double wd;
+  final int typeOfUser;
+  AddNewData(
+    this.value,
+    this.cont,
+    this.icon,
+    this.color,
+    this.funct,
+    this.wd,
+    this.typeOfUser
+  );
+  @override
+  Widget build(BuildContext context){
+    return SizedBox(
+      width:wd,
+      child:Container(
+        margin:EdgeInsets.fromLTRB(wd/20,0,wd/20,0),
+        child: Row(
+          children:[
+            IconButton(
+              icon:Icon(typeOfUser==value?Icons.check_circle:Icons.check_circle_outline,color:Colors.blue), 
+              onPressed:()=>funct(value)
+            ),
+            icon==null?SizedBox():
+            Icon(icon,color:color),
+            Container(
+              margin:EdgeInsets.fromLTRB(10,0,0,0),
+              child:Text(
+                cont,style:TextStyle(
+                  fontSize:15,fontWeight:FontWeight.bold
+                )
+              )
+            ),
+          ]
+        ),
       ),
     );
   }

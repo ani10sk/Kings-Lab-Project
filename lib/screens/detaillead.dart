@@ -222,6 +222,7 @@ class AddNew extends StatelessWidget{
             icon:Icon(typeOfUser==value?Icons.check_circle:Icons.check_circle_outline,color:Colors.blue), 
             onPressed:funct
           ),
+          icon==null?SizedBox():
           Icon(icon,color:color),
           Container(
             margin:EdgeInsets.fromLTRB(10,0,0,0),

@@ -24,7 +24,7 @@ class Selected extends StatelessWidget{
       margin:EdgeInsets.fromLTRB(20,5,20,15),
       duration:Duration(seconds:1),
       child:SizedBox(
-        height:isexpanded==0?70:160,
+        height:isexpanded==0?78:160,
         child:ListView(
           physics:NeverScrollableScrollPhysics(),
           children:[
